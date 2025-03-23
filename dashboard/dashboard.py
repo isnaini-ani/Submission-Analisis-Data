@@ -37,7 +37,7 @@ def create_bystate_df(df):
 
 
 #load berkas main_data.csv
-main_data = pd.read_csv("main_data.csv")
+main_data = pd.read_csv("dashboard/main_data.csv")
 
 #mengurutkan data frame berdasarkan order_approved_at
 datetime_columns = ["order_purchase_timestamp", "order_approved_at", "order_delivered_carrier_date",
@@ -54,7 +54,7 @@ max_date = main_data["order_approved_at"].max()
 
 with st.sidebar:
     # Menambahkan logo perusahaan
-    st.image("logo.png")
+    st.image("dashboard/logo.png")
     
     # Mengambil start_date & end_date dari date_input
     start_date, end_date = st.date_input(
