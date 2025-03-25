@@ -35,6 +35,33 @@ def create_bystate_df(df):
     
     return bystate_df
 
+#untuk menyiapkan customer_monthly_df
+def create_customer_monthly_df(df):
+    customer_monthly_df = df.resample(rule='ME', on='order_purchase_timestamp').agg({
+        "customer_id": "nunique"
+    })
+    customer_monthly_df.index = customer_monthly_df.index.strftime('%B')
+    
+    customer_monthly_df = customer_monthly_df.reset_index()
+    customer_monthly_df.rename(columns={
+        "customer_id": "customer_count"
+    }, inplace=True)
+    
+    return customer_monthly_df
+
+#untuk menyiapkan order_monthly_df
+def create_order_monthly_df(df):
+    order_monthly_df = df.resample(rule='ME', on='order_purchase_timestamp').agg({
+        "order_id": "nunique"
+    })
+    order_monthly_df.index = order_monthly_df.index.strftime('%B')
+    
+    order_monthly_df = order_monthly_df.reset_index()
+    order_monthly_df.rename(columns={
+        "order_id": "order_count"
+    }, inplace=True)
+    
+    return order_monthly_df
 
 #load berkas main_data.csv
 main_data = pd.read_csv("dashboard/main_data.csv")
@@ -71,6 +98,8 @@ main_df = main_data[(main_data["order_approved_at"] >= str(start_date)) &
 orders_daily_df = create_orders_daily_df(main_df)
 bycity_df = create_bycity_df(main_df)
 bystate_df = create_bystate_df(main_df)
+customer_monthly_df = create_customer_monthly_df(main_df)
+order_monthly_df = create_order_monthly_df(main_df)
 
 #menambahkan header pada dashboard
 st.header('E Commerce Public Dashboard :sparkles:')
@@ -135,3 +164,24 @@ with col2:
     ax.tick_params(axis='x', labelsize=35)
     ax.tick_params(axis='y', labelsize=30)
     st.pyplot(fig)
+
+#dua visualisasi data untuk menampilkan performa penjualan
+st.subheader("Performa Penjualan Bulanan")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    fig, ax = plt.subplots(figsize=(20, 10))
+    plt.plot(customer_monthly_df["order_purchase_timestamp"], customer_monthly_df["customer_count"], marker="o", linewidth=2, color="#72BCD4")
+    plt.title("Banyaknya customer yang melakukan transaksi per-Bulan", loc="center", fontsize=20)
+    plt.xticks(fontsize=10) 
+    plt.yticks(fontsize=10) 
+    plt.show()
+    
+with col2:
+    fig, ax = plt.subplots(figsize=(20, 10))
+    plt.plot(order_monthly_df["order_purchase_timestamp"], order_monthly_df["order_count"], marker='o', linewidth=2, color="#72BCD4")
+    plt.title("Jumlah Order per-Bulan", loc="center", fontsize=20)
+    plt.xticks(fontsize=10) 
+    plt.yticks(fontsize=10) 
+    plt.show()
