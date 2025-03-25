@@ -172,7 +172,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.plot(customer_monthly_df["order_purchase_timestamp"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
+    plt.plot(customer_monthly_df["order_purchase_timestamp"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4", ascending=True) 
     ax.set_title("Banyaknya customer yang melakukan transaksi per-Bulan", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
@@ -182,7 +182,7 @@ with col1:
     
 with col2:
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.plot(order_monthly_df["order_purchase_timestamp"], order_monthly_df["order_count"], marker='o', linewidth=2, color="#72BCD4") 
+    plt.plot(order_monthly_df["order_purchase_timestamp"], order_monthly_df["order_count"], marker='o', linewidth=2, color="#72BCD4", ascending=True) 
     ax.set_title("Jumlah Order per-Bulan", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
