@@ -37,7 +37,7 @@ def create_bystate_df(df):
 
 #untuk menyiapkan customer_monthly_df
 def create_customer_monthly_df(df):
-    customer_monthly_df = df.resample(rule='ME', on='order_purchase_timestamp').agg({
+    customer_monthly_df = df.resample(rule='ME', on='order_approved_at').agg({
         "customer_id": "nunique"
     })
     customer_monthly_df.index = customer_monthly_df.index.strftime('%B')
@@ -51,7 +51,7 @@ def create_customer_monthly_df(df):
 
 #untuk menyiapkan order_monthly_df
 def create_order_monthly_df(df):
-    order_monthly_df = df.resample(rule='ME', on='order_purchase_timestamp').agg({
+    order_monthly_df = df.resample(rule='ME', on='order_approved_at').agg({
         "order_id": "nunique"
     })
     order_monthly_df.index = order_monthly_df.index.strftime('%B')
@@ -71,7 +71,7 @@ datetime_columns = ["order_purchase_timestamp", "order_approved_at", "order_deli
 "order_delivered_customer_date", "order_estimated_delivery_date"]
 main_data.sort_values(by="order_approved_at", inplace=True)
 main_data.reset_index(inplace=True)
- 
+
 for colum in datetime_columns:
     main_data[colum] = pd.to_datetime(main_data[colum])
 
@@ -172,7 +172,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.plot(customer_monthly_df["order_purchase_timestamp"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4", ascending=True) 
+    plt.plot(customer_monthly_df["order_approved_at"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
     ax.set_title("Banyaknya customer yang melakukan transaksi per-Bulan", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
@@ -182,7 +182,7 @@ with col1:
     
 with col2:
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.plot(order_monthly_df["order_purchase_timestamp"], order_monthly_df["order_count"], marker='o', linewidth=2, color="#72BCD4", ascending=True) 
+    plt.plot(order_monthly_df["order_approved_at"], order_monthly_df["order_count"], marker='o', linewidth=2, color="#72BCD4") 
     ax.set_title("Jumlah Order per-Bulan", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
