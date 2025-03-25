@@ -178,6 +178,12 @@ with col1:
     ax.set_xlabel(None)
     ax.tick_params(axis='x', labelsize=35)
     ax.tick_params(axis='y', labelsize=30)
+    ax.xaxis.set_major_locator(mdates.YearLocator())  # Menampilkan setiap tahun
+    ax.xaxis.set_minor_locator(mdates.MonthLocator())  # Menampilkan setiap bulan
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))  # Format tahun
+    ax.xaxis.set_minor_formatter(mdates.DateFormatter('%b'))  # Format bulan (Jan, Feb, dll.)
+    plt.xticks(rotation=45, fontsize=20)
+    plt.yticks(fontsize=20)
     st.pyplot(fig)
     
 with col2:
