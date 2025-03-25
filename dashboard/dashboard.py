@@ -133,7 +133,14 @@ col1, col2 = st.columns(2)
 
 with col1:
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.plot(customer_monthly_df["order_purchase_timestamp"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
+    colors_ = ["#72BCD4"] + ["#D3D3D3"] * (len(bycity_df) - 1)
+    sns.barplot(
+        x="customer_count", 
+        y="customer_city",
+        data=bycity_df.sort_values(by="customer_count", ascending=False).head(10),
+        palette=colors_,
+        ax=ax
+    )
     ax.set_title("Jumlah Pelanggan berdasarkan Kota", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
@@ -165,15 +172,8 @@ col1, col2 = st.columns(2)
 
 with col1:
     fig, ax = plt.subplots(figsize=(20, 10))
-    colors_ = ["#72BCD4"] + ["#D3D3D3"] * (len(bystate_df) - 1)
-    sns.lineplot(
-        x="", 
-        y="customer_state",
-        data=bystate_df.sort_values(by="customer_count", ascending=False).head(10),
-        palette=colors_,
-        ax=ax
-    )
-    ax.set_title("Jumlah Pelanggan berdasarkan State", loc="center", fontsize=50)
+    plt.plot(customer_monthly_df["order_purchase_timestamp"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
+    ax.set_title("Jumlah Pelanggan berdasarkan Kota", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
     ax.tick_params(axis='x', labelsize=35)
