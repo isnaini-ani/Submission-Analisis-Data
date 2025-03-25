@@ -173,7 +173,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     fig, ax = plt.subplots(figsize=(20, 10))
-    plt.plot(customer_monthly_df["order_approved_at"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
+    ax.plot(customer_monthly_df["order_approved_at"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
     ax.set_title("Banyaknya customer yang melakukan transaksi per-Bulan", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
@@ -185,6 +185,7 @@ with col1:
     ax.xaxis.set_minor_formatter(mdates.DateFormatter('%b'))  # Format bulan (Jan, Feb, dll.)
     plt.xticks(rotation=45, fontsize=20)
     plt.yticks(fontsize=20)
+    ax.grid(True, linestyle="--", alpha=0.6)
     st.pyplot(fig)
     
 with col2:
