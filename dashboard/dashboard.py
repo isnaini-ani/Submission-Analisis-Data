@@ -42,8 +42,8 @@ def create_customer_monthly_df(df):
         "customer_id": "nunique"
     })
     customer_monthly_df.index = customer_monthly_df.index.strftime('%B')
-    
     customer_monthly_df = customer_monthly_df.reset_index()
+    
     customer_monthly_df.rename(columns={
         "customer_id": "customer_count"
     }, inplace=True)
@@ -173,19 +173,13 @@ col1, col2 = st.columns(2)
 
 with col1:
     fig, ax = plt.subplots(figsize=(20, 10))
-    ax.plot(customer_monthly_df["order_approved_at"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4") 
+    ax.plot(customer_monthly_df["order_approved_at"], customer_monthly_df["customer_count"], marker='o', linewidth=2, color="#72BCD4", linestyle='-') 
     ax.set_title("Banyaknya customer yang melakukan transaksi per-Bulan", loc="center", fontsize=50)
     ax.set_ylabel(None)
     ax.set_xlabel(None)
     ax.tick_params(axis='x', labelsize=35)
     ax.tick_params(axis='y', labelsize=30)
-    ax.xaxis.set_major_locator(mdates.YearLocator())  # Menampilkan setiap tahun
-    ax.xaxis.set_minor_locator(mdates.MonthLocator())  # Menampilkan setiap bulan
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))  # Format tahun
-    ax.xaxis.set_minor_formatter(mdates.DateFormatter('%b'))  # Format bulan (Jan, Feb, dll.)
-    plt.xticks(rotation=45, fontsize=20)
-    plt.yticks(fontsize=20)
-    ax.grid(True, linestyle="--", alpha=0.6)
+    plt.xticks(rotation=45)    
     st.pyplot(fig)
     
 with col2:
@@ -196,4 +190,5 @@ with col2:
     ax.set_xlabel(None)
     ax.tick_params(axis='x', labelsize=35)
     ax.tick_params(axis='y', labelsize=30)
+    plt.xticks(rotation=45)    
     st.pyplot(fig)
